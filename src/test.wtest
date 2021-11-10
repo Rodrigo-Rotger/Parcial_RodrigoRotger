@@ -1,0 +1,64 @@
+import Plantas.*
+import Parcelas.*
+
+describe "tests" {
+	
+	const menta1 = new Menta (anioSemilla = 2004, altura= 1)
+	const menta2 = new Menta (anioSemilla = 2006, altura= 0.3)
+	const soja1 = new Soja (anioSemilla = 2009, altura= 0.6)
+	const quinoa1 = new Quinoa (horasSolTolera = 12, anioSemilla = 2010, altura= 0.8)
+	const quinoa2 = new Quinoa (horasSolTolera = 9,  anioSemilla = 2001, altura= 0.7)
+	const parcela1 = new Parcela (ancho = 20, largo = 1, horasSolPorDia = 8)
+	
+	
+test "Menta " {
+	
+	assert.that(menta1.daNuevasSemillas())
+	assert.equals(3, menta1.espacioPlantada())
+	
+	assert.notThat(menta2.daNuevasSemillas())
+	assert.equals(0.9, menta2.espacioPlantada())
+	}
+
+test "Soja " {
+	
+	assert.notThat(soja1.daNuevasSemillas())
+	assert.equals(7, soja1.horasSolTolera())
+	assert.equals(0.3, soja1.espacioPlantada())
+	}
+	
+test "Quinoa" {
+	
+	assert.that(quinoa1.daNuevasSemillas())
+	assert.that(quinoa2.daNuevasSemillas())
+	}
+	
+test "Parcela" {
+	
+	assert.equals(20,parcela1.superficie())
+	assert.equals(4, parcela1.cantMaxPlantas())
+	}
+test "Parcela Con Soja" {
+	
+	const soja2 = new Soja (anioSemilla = 2010, altura= 1.2)
+	const soja3 = new Soja (anioSemilla = 2010, altura= 1.4)
+	const soja4 = new Soja (anioSemilla = 2010, altura= 1.1)
+	const soja5 = new Soja (anioSemilla = 2010, altura= 1.3)
+	const soja6 = new Soja (anioSemilla = 2010, altura= 1.4)
+	
+	parcela1.plantar(soja2)
+	parcela1.plantar(soja3)
+	parcela1.plantar(soja4)
+	parcela1.plantar(soja5)
+	
+	
+	assert.notThat(parcela1.tieneComplicaciones())
+	assert.throwsExceptionWithMessage("No se puede plantar",{parcela1.plantar(soja6)})
+	}
+
+
+
+
+}
+
+
